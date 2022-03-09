@@ -1,0 +1,46 @@
+/*       #window
+              The name of the window itself.
+
+       #outer-box
+              The name of the box that contains everything.
+
+       #input
+              The name of the search bar.
+
+       #scroll
+              The name of the scrolled window containing all of the entries.
+
+       #inner-box
+              The name of the box containing all of the entries.
+
+       #img
+              The name of all images in entries displayed in image mode.
+
+       #text
+              The name of all the text in entries.
+
+       #unselected
+              The name of all entries currently unselected. A better way of doing this is to do #entry and combine that with #entry:selected
+
+       #selected
+              The name of all entries currently selected. A better way of doing this is to do #entry:selected
+
+       .entry
+              The class attached to all entries. This is attached to the inside property box and is old, you probably want #entry instead
+
+       #entry
+              The name of all entries.
+$dimblue #285f5a
+*/
+#window {
+opacity: .8;
+background-color: #285f5a;
+}
+
+#entry {
+opacity: .9;
+}
+#selected {
+background-color: #075b02;
+border-color: #075b02;
+}

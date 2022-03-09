@@ -1,0 +1,25 @@
+% Color settings
+color normal lightgray black
+color status yellow blue
+color underline yellow black
+color overstrike brightgreen black
+
+setkey bob "g"
+setkey eob "G"
+setkey down "e"
+setkey down "E"
+setkey down "j"
+setkey down "^N"
+setkey up "y"
+setkey up "Y"
+setkey up "k"
+setkey up "^P"
+setkey up "K"
+setkey page_down "f"
+setkey page_down "F"
+setkey page_up "b"
+setkey page_up "^B"
+setkey bob "p"
+setkey other_window "z"
+setkey other_window "w"
+setkey search_backward "?"
