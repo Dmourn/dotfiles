@@ -7,5 +7,5 @@ mv -i ./i3 ~/.config/
 mv -i ./zshrc ~/.zshrc
 mv -i ./mostrc ~/.mostrc
 mv -i ./tmux.conf ~/.tmux.conf
-
+cat bashrc >> ~/.bashrc && rm bashrc
 
