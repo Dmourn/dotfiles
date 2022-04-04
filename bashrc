@@ -6,6 +6,11 @@ export EDITOR="/usr/bin/vim"
 alias sl='ls'
 alias l='ls -alh'
 alias ll='ls -ap'
+
 if [[ -e /usr/bin/batcat ]] ; then
-alias bat=batcat
+	alias bat=batcat
 fi
+
+[[ -e /usr/local/bin/manpager ]] && export MANPAGER=/usr/local/bin/manpager
+
+# vi: ts=4 noexpandtab
