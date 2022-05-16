@@ -22,12 +22,7 @@ setopt notify
 unsetopt beep
 
 export EDITOR=vim
-export MANPAGER="most -s"
 export WLR_DRM_NO_MODIFIERS=1
-#export GIT_PS1_SHOWDIRTYSTATE
-#export GIT_PS1_SHOW
-#export GIT_PS1_SHOW
-#export GIT_PS1_SHOW
 
 export XDG_CONFIG_HOME=$HOME/.config
 
@@ -46,8 +41,6 @@ RPROMPT='%(?.%F{yellow}.%F{red})%U%?%f%u'
 alias ls="ls --color=always"
 alias sl="ls"
 
-# aberrant behavior because zsh builtin which
-# != bash builtin which... trying abs path
 if [[ -z $(/usr/bin/which exa 2>/dev/null) ]]
 then
 	alias l='ls -alhg'
@@ -66,13 +59,10 @@ alias bd='buildah'
 alias pd='podman'
 
 alias firefox='firefox-wayland'
-alias ev-ag='eval $(ssh-agent)'
+alias evag='eval $(ssh-agent)'
 
 export TERM=xterm-256color
-alias pol=/usr/libexec/xfce-polkit
 alias s25=sha256sum
 
 export PYTHONDONTWRITEBYTECODE=1
 
-alias open=/usr/bin/xdg-open
-export GRIM_DEFAULT_DIR=/home/%n/Pictures/Grimshots
