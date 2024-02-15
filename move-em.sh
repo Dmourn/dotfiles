@@ -12,11 +12,10 @@ if [[ ! -d "${CONFIG_DIR}" ]] ; then
 	mkdir "${CONFIG_DIR}"
 fi
 
-
-cp -ir ./waybar "${CONFIG_DIR}"/waybar
-cp -ir ./wofi "${CONFIG_DIR}"/wofi
-cp -ir ./i3 "${CONFIG_DIR}"/i3
-cp -ir ./sway "${CONFIG_DIR}"/sway
+CONFIG_PRGMS=(waybar wofi i3 sway nvim)
+for p in "${CONFIG_PRGMS[@]}" ; do
+	cp -ir ./"${p}" "${CONFIG_DIR}/${p}"
+done
 
 cp -i ./zshrc ~/.zshrc
 cp -i ./mostrc ~/.mostrc
