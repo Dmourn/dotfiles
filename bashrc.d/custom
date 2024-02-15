@@ -1,0 +1,32 @@
+#!/bin/bash
+
+tempd() {
+	LAST_TEMPDIR="$(mktemp -d)"
+	export LAST_TEMPDIR
+	cd "$LAST_TEMPDIR" || echo
+}
+
+nvimp() {
+	nvim -p "$@"
+}
+
+venv() {
+	if [[ -z "$1" ]] ; then
+		TDIR=./.env
+	else
+		TDIR="$1"
+	fi
+	python3 -m venv "$TDIR"
+	source "$TDIR"/bin/activate
+}
+
+runserver() {
+	LHOST="$1"
+	LPORT="$2"
+	if [[ -z "${LPORT}" ]] ; then
+		echo "usage: runserver IP PORT"
+	else
+		python -m http.server -b "${LHOST}" "${LPORT}"
+	fi
+}
+

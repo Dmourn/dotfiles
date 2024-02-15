@@ -1,5 +1,7 @@
 # dotfiles
 
-just the way I like them
+Just the way I like them.
 
-don't expect much, I do my best not to deviate from vanilla configs
+Don't expect much, I do my best not to deviate from vanilla configs.
+
+Really though, no one should use this.
