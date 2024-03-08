@@ -26,7 +26,7 @@ runserver() {
 	if [[ -z "${LPORT}" ]] ; then
 		echo "usage: runserver IP PORT"
 	else
-		python -m http.server -b "${LHOST}" "${LPORT}"
+		python3 -m http.server -b "${LHOST}" "${LPORT}"
 	fi
 }
 

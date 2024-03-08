@@ -1,0 +1,12 @@
+#!/use/bin/env  bash
+
+_runserver_completions()
+{
+  if [ "${#COMP_WORDS[@]}" != "2" ]; then
+    return
+  fi
+  COMPREPLY=($(compgen -W "$(ip -brief a | awk '{print $3}' | sed 's/\/.*//')" -- "${COMP_WORDS[1]}"))
+
+}
+
+complete -F  _runserver_completions runserver

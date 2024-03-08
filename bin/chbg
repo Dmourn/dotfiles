@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+
+import os
+import subprocess, shutil, time
+
+"""
+A shitty script to change the background using swaybg
+"""
+
+def get_wallpaper():
+    WALLPAPER_DIR = os.environ.get("HOME") + "/.local/share/wallpapers"
+    WALLPAPER_NAME = (
+        os.popen(f"find {WALLPAPER_DIR} -type f | shuf | head -n1").read().strip("\n")
+    )
+    return WALLPAPER_NAME
+
+
+def main():
+    while True:
+        wallpaper = get_wallpaper()
+        p = subprocess.Popen(
+            [shutil.which("swaybg"), "-i", f"{wallpaper}", "-m", "fill"]
+        )
+        time.sleep(600)
+        p.kill()
+
+
+if __name__ == "__main__":
+    main()

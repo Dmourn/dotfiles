@@ -1,0 +1,14 @@
+[Unit]
+Description=Changes wallpaper
+
+[Install]
+WantedBy=xdg-desktop-portal-wlr.service
+WantedBy=xdg-desktop-portal-hyprland.service
+
+[Service]
+Type=exec
+# Wants=xdg-desktop-portal-wlr.service
+Restart=always
+ExecStart=/home/auser/.local/bin/chbg
+ExecStop=/usr/bin/pkill swaybg
+ExecReload=/usr/bin/pkill swaybg
