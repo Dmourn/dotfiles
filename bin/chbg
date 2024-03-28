@@ -1,29 +1,96 @@
 #!/usr/bin/env python3
 
+"""
+A program to cycle through wallpapers using swaybg
+"""
+
 import os
-import subprocess, shutil, time
+import subprocess
+import shutil
+import sys
+import time
+from glob import glob
+from random import shuffle
+from typing import List
 
-"""
-A shitty script to change the background using swaybg
-"""
 
-def get_wallpaper():
-    WALLPAPER_DIR = os.environ.get("HOME") + "/.local/share/wallpapers"
-    WALLPAPER_NAME = (
-        os.popen(f"find {WALLPAPER_DIR} -type f | shuf | head -n1").read().strip("\n")
+def get_wallpapers() -> List[str]:
+    """Get list of wallpapers"""
+    home_dir = os.environ.get("HOME")
+    if home_dir is None:
+        home_dir = "/home" + os.getlogin()
+    wallpaper_dir = home_dir + "/.local/share/wallpapers/"
+    file_exts = ["png", "jpeg", "jpg", "webp"]
+    wallpaper_list = []
+    for ext in file_exts:
+        wallpaper_list += glob(wallpaper_dir + f"*.{ext}")
+    return wallpaper_list
+
+
+def start_swaybg(wallpaper: str, mode: str) -> subprocess.Popen:
+    """Spawn a swaybg process"""
+    sway_binary = shutil.which("swaybg")
+    if sway_binary is None:
+        print("sway was not found in PATH. Exiting...", file=sys.stderr)
+        sys.exit(1)
+    return subprocess.Popen(
+        [sway_binary, "-i", f"{wallpaper}", "-m", f"{mode}"],
+        stderr=subprocess.PIPE,
+        stdout=subprocess.PIPE,
     )
-    return WALLPAPER_NAME
 
 
-def main():
+def main(t: int, mode: str):
+    """
+    Run swaybg for t seconds
+    There is a small lag when swaybg starts back up.
+    My solution is to call the next swaybg proc before killing
+    the last one.
+    """
+
+    time_offset = 5
+    if t < time_offset:
+        print(f"time must be more than {time_offset} seconds", file=sys.stderr)
+        sys.exit()
+
+    time_padded = t - time_offset
+    wallpaper_list: List[str] = []
+    proc_list = []
+
     while True:
-        wallpaper = get_wallpaper()
-        p = subprocess.Popen(
-            [shutil.which("swaybg"), "-i", f"{wallpaper}", "-m", "fill"]
-        )
-        time.sleep(600)
-        p.kill()
+        if len(wallpaper_list) <= 1:
+            wallpaper_list = get_wallpapers()
+            shuffle(wallpaper_list)
+
+        if len(proc_list) != 0:
+            print(f"{proc_list}")
+            time.sleep(time_padded)
+            proc_list.append(start_swaybg(wallpaper_list.pop(), mode))
+            time.sleep(time_offset)
+            p = proc_list.pop(0)
+            p.terminate()
+        else:
+            print("proc_list empty. starting new process")
+            proc_list.append(start_swaybg(wallpaper_list.pop(), mode))
 
 
 if __name__ == "__main__":
-    main()
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Change backgrounds periodically using swaybg. Currently only works for one display (since that all I have)")
+    parser.add_argument(
+        "-t",
+        "--timeout",
+        help="Time in seconds before wallpaper changes",
+        type=float,
+        default=600,
+    )
+    parser.add_argument(
+        "-m",
+        "--mode",
+        help="Mode for wallpaper [stretch, fill, fit, center, tile]",
+        type=str,
+        default="fill",
+    )
+    args = parser.parse_args()
+    main(args.timeout, args.mode)

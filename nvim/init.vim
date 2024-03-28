@@ -6,9 +6,11 @@ let g:ale_linters = {'rust' : ['analyzer'],}
 
 " colorscheme OceanicNext
 set number
+set ts=4 sw=4
 
 autocmd FileType c setlocal ts=2 sts=2 sw=2 expandtab
 autocmd FileType sh setlocal ts=2 sts=2 sw=2 expandtab
+autocmd FileType go setlocal ts=4 sts=4 sw=4 expandtab
 set completeopt=menu,menuone,preview
 highlight ALEError ctermbg=DarkMagenta
 highlight ALEWarning ctermbg=None

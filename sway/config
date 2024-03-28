@@ -82,7 +82,7 @@ exec swayidle
 
     set $menu2 wofi --show run --term alacritty --lines=7 --location 0
     #set $menu wofi --show run --term alacritty --lines=7 --location 1
-    set $menu wofi --show drun --location 1 --lines=20 
+    set $menu wofi --show drun --location 1 --lines=20
 
     # Start your launcher
     bindsym $mod+d exec $menu
@@ -221,7 +221,7 @@ bindsym  XF86AudioLowerVolume exec amixer -D pipewire set Master 5%-
 bindsym $mod+F11 exec dbus-send --system --type=method_call --dest="org.freedesktop.UPower" "/org/freedesktop/UPower/KbdBacklight" "org.freedesktop.UPower.KbdBacklight.SetBrightness" int32:0
 bindsym $mod+F12 exec dbus-send --system --type=method_call --dest="org.freedesktop.UPower" "/org/freedesktop/UPower/KbdBacklight" "org.freedesktop.UPower.KbdBacklight.SetBrightness" int32:1
 
-#bindsym --locked XF86MonBrightnessUp exec brightnessctl s +5% 
+#bindsym --locked XF86MonBrightnessUp exec brightnessctl s +5%
 #bindsym --locked XF86MonBrightnessDown exec brightnessctl s 5%
 # inner|outer|horizontal|vertical|top|right|bottom|left
 gaps horizontal 5
@@ -230,7 +230,7 @@ gaps top 1
 gaps right 5
 gaps bottom 5
 gaps left 5
-gaps outer 5 
+gaps outer 5
 gaps inner 5
 
 workspace "Panel" gaps inner 15
@@ -260,12 +260,12 @@ bar {
 #    #mode hide
 #
 #    # T|R|B|L
-#    #gaps 0 10 0 10 
+#    #gaps 0 10 0 10
 #    height 30
 #    colors {
 #        statusline #fc5c5c
 #        background #323232e0
-#	separator $rusty 
+#	separator $rusty
 #	#focused_background #1295c4
 #	focused_statusline #fc5c5c
 #	focused_separator  #ff0c04
@@ -308,12 +308,9 @@ bindsym $mod+underscore opacity minus .1
 bindsym $mod+g exec flatpak run --socket=wayland org.mozilla.firefox
 mouse_warping container
 
-#default_border none
 default_border pixel 2
 default_floating_border pixel 2
 
-# output * bg /home/auser/.local/share/wallpapers/rain_world1.png fill
-# exec ~/.azotebg
 bindsym $mod+Shift+z exec pkill --signal=QUIT Xwayland
 
 bindsym $mod+y grim

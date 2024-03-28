@@ -1,0 +1,8 @@
+[Unit]
+Description=wlsunset
+Documentation=man:wlsunset(1)
+
+[Service]
+Type=simple
+BusName=org.freedesktop.Notifications
+ExecStart=/usr/bin/wlsunset -t 0 -T 1
