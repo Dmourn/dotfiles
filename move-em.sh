@@ -13,7 +13,6 @@ if [[ ! -d "${CONFIG_DIR}" ]] ; then
 fi
 
 this_script=$(readlink -f "$0")
-# PRGRMROOT="${this_script%/"${0%./}"}"
 PRGRMROOT="${this_script%/*}"
 
 BASH_COMPLETION_DIR="${HOME}"/.local/share/bash-completion/completions
@@ -21,7 +20,7 @@ mkdir -p "$BASH_COMPLETION_DIR"
 
 CONFIG_PRGMS=(waybar wofi i3 sway nvim)
 for p in "${CONFIG_PRGMS[@]}" ; do
-	cp -vir "${PRGRMROOT}/${p}" "${CONFIG_DIR}/${p}"
+	cp -vir "${PRGRMROOT}/${p}" "${CONFIG_DIR}/"
 done
 
 SYSTEMD_USR_DIR="${HOME}/.config/systemd/user/"
@@ -37,4 +36,7 @@ cp -vir "${PRGRMROOT}"/bashrc.d "${HOME}"/.bashrc.d
 
 cp -vi "${PRGRMROOT}"/bash-completion/* "$BASH_COMPLETION_DIR"/
 
-curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+read -rp "Install vim-plug for neovim? (y/n) " VIM_PLUG
+[[ $VIM_PLUG = "y" || $VIM_PLUG = "yes" || $VIM_PLUG = "Y" ]] && \
+  curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim \
+    --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'

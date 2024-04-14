@@ -10,6 +10,7 @@ import shutil
 import sys
 import time
 from glob import glob
+from pathlib import Path
 from random import shuffle
 from typing import List
 
@@ -17,13 +18,17 @@ from typing import List
 def get_wallpapers() -> List[str]:
     """Get list of wallpapers"""
     home_dir = os.environ.get("HOME")
+    wallpaper_dir = os.environ.get("WALLPAPER_DIR")
     if home_dir is None:
-        home_dir = "/home" + os.getlogin()
-    wallpaper_dir = home_dir + "/.local/share/wallpapers/"
+        home_dir = "/home/" + os.getlogin()
+    if wallpaper_dir is None:
+        wallpaper_dir = home_dir + "/.local/share/wallpapers"
+    # ran into weird formatting with slashes
+    wallpaper_dir = Path(wallpaper_dir)
     file_exts = ["png", "jpeg", "jpg", "webp"]
     wallpaper_list = []
     for ext in file_exts:
-        wallpaper_list += glob(wallpaper_dir + f"*.{ext}")
+        wallpaper_list += glob(wallpaper_dir.as_posix() + f"/*.{ext}")
     return wallpaper_list
 
 
@@ -63,21 +68,21 @@ def main(t: int, mode: str):
             shuffle(wallpaper_list)
 
         if len(proc_list) != 0:
-            print(f"{proc_list}")
             time.sleep(time_padded)
             proc_list.append(start_swaybg(wallpaper_list.pop(), mode))
             time.sleep(time_offset)
             p = proc_list.pop(0)
             p.terminate()
         else:
-            print("proc_list empty. starting new process")
             proc_list.append(start_swaybg(wallpaper_list.pop(), mode))
 
 
 if __name__ == "__main__":
     import argparse
 
-    parser = argparse.ArgumentParser(description="Change backgrounds periodically using swaybg. Currently only works for one display (since that all I have)")
+    parser = argparse.ArgumentParser(
+        description="Change backgrounds periodically using swaybg. Currently only works for one display (since that all I have)"
+    )
     parser.add_argument(
         "-t",
         "--timeout",
