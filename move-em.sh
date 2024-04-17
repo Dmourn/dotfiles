@@ -36,7 +36,12 @@ cp -vir "${PRGRMROOT}"/bashrc.d "${HOME}"/.bashrc.d
 
 cp -vi "${PRGRMROOT}"/bash-completion/* "$BASH_COMPLETION_DIR"/
 
-read -rp "Install vim-plug for neovim? (y/n) " VIM_PLUG
-[[ $VIM_PLUG = "y" || $VIM_PLUG = "yes" || $VIM_PLUG = "Y" ]] && \
-  curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim \
-    --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+# We don't want to run this if in a container
+if [[ -f /run/.containerenv ]] ; then
+  exit
+else
+  read -rp "Install vim-plug for neovim? (y/n) " VIM_PLUG
+  [[ $VIM_PLUG = "y" || $VIM_PLUG = "yes" || $VIM_PLUG = "Y" ]] && \
+    curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim \
+      --create-dirs 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+fi
