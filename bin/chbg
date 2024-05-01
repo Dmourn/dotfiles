@@ -24,11 +24,12 @@ def get_wallpapers() -> List[str]:
     if wallpaper_dir is None:
         wallpaper_dir = home_dir + "/.local/share/wallpapers"
     # ran into weird formatting with slashes
-    wallpaper_dir = Path(wallpaper_dir)
+    wallpaper_dirs = [ Path(d) for d in wallpaper_dir.split(':')]
     file_exts = ["png", "jpeg", "jpg", "webp"]
     wallpaper_list = []
-    for ext in file_exts:
-        wallpaper_list += glob(wallpaper_dir.as_posix() + f"/*.{ext}")
+    for d in wallpaper_dirs:
+        for ext in file_exts:
+            wallpaper_list += glob(d.as_posix() + f"/*.{ext}")
     return wallpaper_list
 
 
